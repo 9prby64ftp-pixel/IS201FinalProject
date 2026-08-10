@@ -55,27 +55,25 @@ body {
 .slide-two {
     background:
         linear-gradient(
-            rgba(0, 0, 0, 0.45),
-            rgba(0, 0, 0, 0.55)
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.50)
         ),
-        linear-gradient(
-            135deg,
-            #39434a,
-            #6c757d
-        );
+        url("../images/byu.jpg");
+
+    background-size: cover;
+    background-position: center;
 }
 
 .slide-three {
     background:
         linear-gradient(
-            rgba(0, 0, 0, 0.45),
-            rgba(0, 0, 0, 0.55)
+            rgba(0, 0, 0, 0.30),
+            rgba(0, 0, 0, 0.50)
         ),
-        linear-gradient(
-            135deg,
-            #243329,
-            #65756b
-        );
+        url("../images/adventure.jpg");
+
+    background-size: cover;
+    background-position: center;
 }
 
 .carousel-caption {
