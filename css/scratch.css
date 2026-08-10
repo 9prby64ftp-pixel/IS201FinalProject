@@ -1,0 +1,499 @@
+/* =========================================
+   GENERAL PAGE STYLING
+   ========================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        "Trebuchet MS",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: #25302a;
+
+    background-color: #f3f1e8;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
+
+.nav-bar {
+    background-color: #1f2924;
+
+    padding: 18px 8%;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 30px;
+
+    flex-wrap: wrap;
+}
+
+.nav-bar a {
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    font-size: 0.95rem;
+
+    transition: opacity 0.2s ease;
+}
+
+.nav-bar a:hover {
+    opacity: 0.65;
+}
+
+
+/* =========================================
+   HERO SECTION
+   ========================================= */
+
+.hero-section {
+    min-height: 670px;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.32),
+            rgba(0, 0, 0, 0.58)
+        ),
+        url("../images/hero.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    color: white;
+}
+
+.hero-content {
+    max-width: 850px;
+
+    padding: 50px 30px;
+}
+
+.hero-content h1 {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 5rem;
+
+    margin: 5px 0 20px;
+
+    line-height: 1.05;
+}
+
+.hero-text {
+    font-size: 1.25rem;
+
+    max-width: 720px;
+
+    margin: 0 auto 35px;
+}
+
+.eyebrow {
+    font-size: 0.8rem;
+
+    letter-spacing: 4px;
+
+    font-weight: bold;
+
+    color: #e7dfbd;
+}
+
+.dark-text {
+    color: #637166;
+}
+
+.hero-button {
+    display: inline-block;
+
+    background-color: #f1eee3;
+
+    color: #26342c;
+
+    text-decoration: none;
+
+    padding: 13px 25px;
+
+    border-radius: 30px;
+
+    font-weight: bold;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.hero-button:hover {
+    transform: translateY(-3px);
+
+    background-color: white;
+}
+
+
+/* =========================================
+   GENERAL CONTENT SECTIONS
+   ========================================= */
+
+.content-section {
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 90px 7%;
+}
+
+.section-heading {
+    text-align: center;
+
+    max-width: 760px;
+
+    margin: 0 auto 50px;
+}
+
+.section-heading h2 {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 2.8rem;
+
+    margin: 5px 0 12px;
+
+    color: #25352c;
+}
+
+.section-heading p {
+    font-size: 1.05rem;
+}
+
+
+/* =========================================
+   INTRODUCTION LAYOUT
+   ========================================= */
+
+.two-column-layout {
+    display: flex;
+
+    align-items: center;
+
+    gap: 60px;
+}
+
+.text-block {
+    flex: 1;
+
+    font-size: 1.05rem;
+}
+
+.image-block {
+    flex: 1;
+}
+
+.feature-image {
+    width: 100%;
+
+    height: 500px;
+
+    object-fit: cover;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================
+   ADVENTURE LIST SECTION
+   ========================================= */
+
+.adventure-section {
+    background-color: #26362e;
+
+    color: white;
+
+    padding: 90px 7%;
+}
+
+.adventure-section .section-heading h2 {
+    color: white;
+}
+
+.list-card {
+    background-color: #f4f1e7;
+
+    color: #26362e;
+
+    max-width: 850px;
+
+    margin: auto;
+
+    padding: 45px 60px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.main-list > li {
+    font-size: 1.25rem;
+
+    font-weight: bold;
+
+    margin-bottom: 24px;
+}
+
+.main-list ul {
+    font-size: 1rem;
+
+    font-weight: normal;
+
+    margin-top: 8px;
+}
+
+
+/* =========================================
+   QUOTE SECTION
+   ========================================= */
+
+.quote-section {
+    background-color: #d9d5c7;
+
+    text-align: center;
+
+    padding: 80px 10%;
+}
+
+.quote-section blockquote {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 2.3rem;
+
+    font-style: italic;
+
+    max-width: 900px;
+
+    margin: 0 auto 20px;
+
+    color: #26362e;
+}
+
+.quote-section p {
+    max-width: 700px;
+
+    margin: auto;
+}
+
+
+/* =========================================
+   YOUTUBE VIDEO
+   ========================================= */
+
+.video-container {
+    max-width: 900px;
+
+    margin: auto;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.18);
+
+    aspect-ratio: 16 / 9;
+}
+
+.video-container iframe {
+    width: 100%;
+
+    height: 100%;
+
+    border: none;
+}
+
+
+/* =========================================
+   TABLEAU SECTION
+   ========================================= */
+
+.tableau-section {
+    background-color: #26362e;
+
+    color: white;
+
+    padding: 90px 7%;
+}
+
+.tableau-section .section-heading h2 {
+    color: white;
+}
+
+.tableau-container {
+    max-width: 1050px;
+    margin: auto;
+    background-color: white;
+    padding: 10px;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+
+
+
+/* =========================================
+   AI APP PROMOTION
+   ========================================= */
+
+.app-section {
+    padding: 90px 7%;
+
+    background-color: #f3f1e8;
+}
+
+.app-card {
+    max-width: 850px;
+
+    margin: auto;
+
+    background-color: #d7d2c3;
+
+    padding: 60px;
+
+    border-radius: 22px;
+
+    text-align: center;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.app-card h2 {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 2.7rem;
+
+    margin: 5px 0 15px;
+}
+
+.app-button {
+    display: inline-block;
+
+    margin-top: 18px;
+
+    padding: 13px 25px;
+
+    background-color: #26362e;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 30px;
+
+    font-weight: bold;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.app-button:hover {
+    transform: translateY(-3px);
+
+    opacity: 0.85;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+.footer {
+    background-color: #1f2924;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 35px 20px;
+}
+
+.footer-links {
+    margin-top: 15px;
+}
+
+.footer-links a {
+    color: #e7dfbd;
+
+    text-decoration: none;
+
+    margin: 0 12px;
+
+    font-weight: bold;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 800px) {
+
+    .hero-content h1 {
+        font-size: 3.2rem;
+    }
+
+    .hero-text {
+        font-size: 1.05rem;
+    }
+
+    .two-column-layout {
+        flex-direction: column;
+    }
+
+    .feature-image {
+        height: 420px;
+    }
+
+    .list-card {
+        padding: 35px 30px;
+    }
+
+    .section-heading h2 {
+        font-size: 2.2rem;
+    }
+
+    .quote-section blockquote {
+        font-size: 1.8rem;
+    }
+
+    .app-card {
+        padding: 45px 25px;
+    }
+}

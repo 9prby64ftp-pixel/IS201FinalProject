@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Adventure Generator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                linear-gradient(
+                    rgba(18, 27, 23, 0.72),
+                    rgba(18, 27, 23, 0.88)
+                ),
+                url("images/hero.jpg");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .top-nav {
+            background-color: rgba(20, 30, 25, 0.95);
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .top-nav h2 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .top-nav a:hover {
+            opacity: 0.7;
+        }
+
+        .page-wrapper {
+            width: min(1100px, 92%);
+            margin: 0 auto;
+            padding: 70px 0;
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 45px;
+        }
+
+        .eyebrow {
+            letter-spacing: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #e7dfbd;
+        }
+
+        .intro h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 4.3rem;
+            margin: 10px 0 15px;
+        }
+
+        .intro p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #f0f0f0;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .panel {
+            background-color: rgba(245, 242, 233, 0.96);
+            color: #26352d;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 2rem;
+        }
+
+        .field-group {
+            margin-bottom: 22px;
+        }
+
+        .field-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #b8b8b8;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: white;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        button {
+            border: none;
+            padding: 13px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .primary-button {
+            background-color: #26362e;
+            color: white;
+        }
+
+        .secondary-button {
+            background-color: #d8d3c4;
+            color: #26362e;
+        }
+
+        .result-empty {
+            color: #667068;
+            font-style: italic;
+            line-height: 1.7;
+        }
+
+        .result-title {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        .result-tag {
+            display: inline-block;
+            background-color: #26362e;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin: 20px 0 25px;
+        }
+
+        .stat-card {
+            background-color: #ece8dc;
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #6e766f;
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 1.35rem;
+            font-weight: bold;
+        }
+
+        .gear-section,
+        .challenge-section,
+        .message-section {
+            margin-top: 25px;
+        }
+
+        .gear-section h3,
+        .challenge-section h3,
+        .message-section h3 {
+            margin-bottom: 10px;
+        }
+
+        .gear-list {
+            padding-left: 20px;
+        }
+
+        .gear-list li {
+            margin-bottom: 7px;
+        }
+
+        .difficulty-meter {
+            width: 100%;
+            height: 14px;
+            background-color: #d8d3c4;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .difficulty-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #26362e;
+            transition: width 0.4s ease;
+        }
+
+        .message-box {
+            background-color: #26362e;
+            color: white;
+            padding: 18px;
+            border-radius: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 45px;
+            color: #e5e5e5;
+        }
+
+        .footer-note a {
+            color: #e7dfbd;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        @media (max-width: 850px) {
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .intro h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .panel {
+                padding: 24px;
+            }
+
+            .intro h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-nav">
+        <h2>Adventure Generator</h2>
+
+        <div>
+            <a href="scratch.html">Back to Scratch Page</a>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+
+        <div class="intro">
+            <p class="eyebrow">BUILD YOUR NEXT CHALLENGE</p>
+
+            <h1>Adventure Generator</h1>
+
+            <p>
+                Choose the kind of adventure you want, how difficult you want it
+                to be, how long you have, and the type of terrain you prefer.
+                The generator will create a custom challenge for you.
+            </p>
+        </div>
+
+        <div class="app-grid">
+
+            <!-- Controls -->
+            <div class="panel">
+
+                <h2>Customize Your Adventure</h2>
+
+                <div class="field-group">
+                    <label for="activity">Activity</label>
+
+                    <select id="activity">
+                        <option value="Hiking">Hiking</option>
+                        <option value="Backpacking">Backpacking</option>
+                        <option value="Trail Running">Trail Running</option>
+                        <option value="Skiing">Skiing</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="difficulty">Difficulty</label>
+
+                    <select id="difficulty">
+                        <option value="Easy">Easy</option>
+                        <option value="Moderate" selected>Moderate</option>
+                        <option value="Hard">Hard</option>
+                        <option value="Extreme">Extreme</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="duration">Duration</label>
+
+                    <select id="duration">
+                        <option value="1-2 Hours">1–2 Hours</option>
+                        <option value="Half Day">Half Day</option>
+                        <option value="Full Day" selected>Full Day</option>
+                        <option value="Overnight">Overnight</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="terrain">Terrain</label>
+
+                    <select id="terrain">
+                        <option value="Mountains" selected>Mountains</option>
+                        <option value="Forest">Forest</option>
+                        <option value="Desert">Desert</option>
+                        <option value="Alpine">High Alpine</option>
+                    </select>
+                </div>
+
+                <div class="button-row">
+
+                    <button
+                        type="button"
+                        class="primary-button"
+                        id="generateButton">
+                        Generate Adventure
+                    </button>
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        id="surpriseButton">
+                        Surprise Me
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Results -->
+            <div class="panel" id="resultPanel">
+
+                <h2>Your Adventure</h2>
+
+                <div id="resultContent">
+
+                    <p class="result-empty">
+                        Choose your settings and click
+                        <strong>Generate Adventure</strong> to create your challenge.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            <p>
+                Want to explore more?
+                <a href="scratch.html">Return to the Mountain Adventure page.</a>
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+
+        const activitySelect = document.getElementById("activity");
+        const difficultySelect = document.getElementById("difficulty");
+        const durationSelect = document.getElementById("duration");
+        const terrainSelect = document.getElementById("terrain");
+
+        const generateButton = document.getElementById("generateButton");
+        const surpriseButton = document.getElementById("surpriseButton");
+
+        const resultContent = document.getElementById("resultContent");
+
+
+        const adventureNames = {
+            Hiking: [
+                "Summit Pursuit",
+                "Ridgeline Mission",
+                "High Country Challenge",
+                "Mountain Escape"
+            ],
+
+            Backpacking: [
+                "Backcountry Expedition",
+                "Alpine Overnight",
+                "Wilderness Mission",
+                "Beyond the Trailhead"
+            ],
+
+            "Trail Running": [
+                "Ridgeline Run",
+                "Mountain Miles",
+                "Summit Speed Challenge",
+                "Wild Trail Mission"
+            ],
+
+            Skiing: [
+                "Powder Pursuit",
+                "Vertical Challenge",
+                "Alpine Descent",
+                "Summit to Base Mission"
+            ]
+        };
+
+
+        const terrainDescriptions = {
+            Mountains:
+                "rolling mountain terrain with long climbs, scenic ridgelines, and rewarding viewpoints",
+
+            Forest:
+                "wooded terrain with winding trails, changing elevation, and shaded sections",
+
+            Desert:
+                "open desert terrain with exposed trails, rocky features, and expansive views",
+
+            Alpine:
+                "high-elevation terrain with steep climbs, exposed ridgelines, and rugged alpine scenery"
+        };
+
+
+        const motivationMessages = [
+            "The goal is not just to finish. Take in the views, embrace the difficult sections, and enjoy earning the experience.",
+
+            "Start prepared, stay consistent, and remember that the hardest part of the route often creates the best memory.",
+
+            "Treat this as a challenge, not a race. Stay aware of conditions, manage your effort, and enjoy being outside.",
+
+            "Big adventures are usually built one step at a time. Stay patient, stay prepared, and keep moving."
+        ];
+
+
+        function randomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+
+        function getDifficultyData(difficulty) {
+
+            if (difficulty === "Easy") {
+                return {
+                    multiplier: 0.75,
+                    elevationMultiplier: 0.55,
+                    score: 25,
+                    label: "Low"
+                };
+            }
+
+            if (difficulty === "Moderate") {
+                return {
+                    multiplier: 1,
+                    elevationMultiplier: 1,
+                    score: 50,
+                    label: "Moderate"
+                };
+            }
+
+            if (difficulty === "Hard") {
+                return {
+                    multiplier: 1.35,
+                    elevationMultiplier: 1.5,
+                    score: 75,
+                    label: "High"
+                };
+            }
+
+            return {
+                multiplier: 1.7,
+                elevationMultiplier: 2,
+                score: 100,
+                label: "Extreme"
+            };
+        }
+
+
+        function getDurationData(duration) {
+
+            if (duration === "1-2 Hours") {
+                return {
+                    miles: 4,
+                    elevation: 800,
+                    time: "1–2 hours"
+                };
+            }
+
+            if (duration === "Half Day") {
+                return {
+                    miles: 7,
+                    elevation: 1500,
+                    time: "3–5 hours"
+                };
+            }
+
+            if (duration === "Full Day") {
+                return {
+                    miles: 12,
+                    elevation: 2800,
+                    time: "6–9 hours"
+                };
+            }
+
+            return {
+                miles: 18,
+                elevation: 3500,
+                time: "1–2 days"
+            };
+        }
+
+
+        function adjustForActivity(activity, miles, elevation) {
+
+    let adjustedMiles = miles;
+    let adjustedElevation = elevation;
+
+    if (activity === "Trail Running") {
+        adjustedMiles *= 1.45;
+        adjustedElevation *= 1.1;
+    }
+
+    if (activity === "Backpacking") {
+        adjustedMiles *= 1.2;
+        adjustedElevation *= 1.1;
+    }
+
+    if (activity === "Skiing") {
+        adjustedMiles = 0;
+        adjustedElevation *= 1.7;
+    }
+
+    return {
+        miles: adjustedMiles,
+        elevation: adjustedElevation
+    };
+}
+
+
+        function getGear(activity, terrain, duration) {
+
+            let gear = [
+                "Water",
+                "Weather-appropriate clothing",
+                "Navigation or trail map"
+            ];
+
+            if (activity === "Hiking") {
+                gear.push("Hiking shoes or boots");
+                gear.push("Small daypack");
+            }
+
+            if (activity === "Backpacking") {
+                gear.push("Backpack");
+                gear.push("Shelter");
+                gear.push("Sleeping system");
+                gear.push("Food and cooking supplies");
+            }
+
+            if (activity === "Trail Running") {
+                gear.push("Trail running shoes");
+                gear.push("Hydration vest");
+                gear.push("Quick-access nutrition");
+            }
+
+            if (activity === "Skiing") {
+                gear.push("Skis");
+                gear.push("Helmet");
+                gear.push("Goggles");
+                gear.push("Ski layers");
+            }
+
+            if (terrain === "Desert") {
+                gear.push("Sun protection");
+                gear.push("Extra water");
+            }
+
+            if (terrain === "Alpine") {
+                gear.push("Wind layer");
+                gear.push("Emergency insulation");
+            }
+
+            if (duration === "Overnight" && activity !== "Backpacking") {
+                gear.push("Emergency overnight supplies");
+            }
+
+            return gear;
+        }
+
+
+        function generateAdventure() {
+
+            const activity = activitySelect.value;
+            const difficulty = difficultySelect.value;
+            const duration = durationSelect.value;
+            const terrain = terrainSelect.value;
+
+            const difficultyData = getDifficultyData(difficulty);
+            const durationData = getDurationData(duration);
+
+            let miles =
+                durationData.miles *
+                difficultyData.multiplier;
+
+            let elevation =
+                durationData.elevation *
+                difficultyData.elevationMultiplier;
+
+            const adjusted =
+                adjustForActivity(activity, miles, elevation);
+
+            miles = Math.round(adjusted.miles * 10) / 10;
+            elevation = Math.round(adjusted.elevation / 50) * 50;
+
+            const title =
+                randomItem(adventureNames[activity]);
+
+            const gear =
+                getGear(activity, terrain, duration);
+
+            const gearHTML =
+                gear
+                    .map(item => `<li>${item}</li>`)
+                    .join("");
+
+            const motivation =
+                randomItem(motivationMessages);
+
+            let statsHTML = "";
+
+if (activity === "Skiing") {
+
+    const runCount = Math.max(
+        3,
+        Math.round(elevation / 700)
+    );
+
+    let terrainDifficulty = "";
+
+    if (difficulty === "Easy") {
+        terrainDifficulty = "Green / Beginner Terrain";
+    } else if (difficulty === "Moderate") {
+        terrainDifficulty = "Blue / Intermediate Terrain";
+    } else if (difficulty === "Hard") {
+        terrainDifficulty = "Black / Advanced Terrain";
+    } else {
+        terrainDifficulty = "Double Black / Expert Terrain";
+    }
+
+    statsHTML = `
+        <div class="stat-card">
+            <div class="stat-label">Vertical Descent</div>
+            <div class="stat-value">
+                ${elevation.toLocaleString()} ft
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Suggested Runs</div>
+            <div class="stat-value">
+                ${runCount}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Estimated Time</div>
+            <div class="stat-value">
+                ${durationData.time}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Terrain</div>
+            <div class="stat-value">
+                ${terrainDifficulty}
+            </div>
+        </div>
+    `;
+
+} else {
+
+    statsHTML = `
+        <div class="stat-card">
+            <div class="stat-label">Distance</div>
+            <div class="stat-value">
+                ${miles} miles
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Elevation Gain</div>
+            <div class="stat-value">
+                ${elevation.toLocaleString()} ft
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Estimated Time</div>
+            <div class="stat-value">
+                ${durationData.time}
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Challenge Level</div>
+            <div class="stat-value">
+                ${difficultyData.label}
+            </div>
+        </div>
+    `;
+}
+
+
+resultContent.innerHTML = `
+    <div class="result-title">${title}</div>
+
+    <div class="result-tag">
+        ${activity} • ${difficulty} • ${terrain}
+    </div>
+
+    <p>
+        Your challenge is a ${difficulty.toLowerCase()}
+        ${activity.toLowerCase()} adventure through
+        ${terrainDescriptions[terrain]}.
+    </p>
+
+    <div class="stats-grid">
+        ${statsHTML}
+    </div>
+
+    <div class="challenge-section">
+
+        <h3>Difficulty Rating</h3>
+
+        <div class="difficulty-meter">
+            <div
+                class="difficulty-fill"
+                style="width: ${difficultyData.score}%;">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="gear-section">
+
+        <h3>Suggested Gear</h3>
+
+        <ul class="gear-list">
+            ${gearHTML}
+        </ul>
+
+    </div>
+
+    <div class="message-section">
+
+        <h3>Adventure Note</h3>
+
+        <div class="message-box">
+            ${motivation}
+        </div>
+
+    </div>
+
+    <div class="safety-note">
+        Always check weather, trail, avalanche, and local
+        conditions before heading out.
+    </div>
+`;
+        }
+
+
+        function surpriseMe() {
+
+            const selects = [
+                activitySelect,
+                difficultySelect,
+                durationSelect,
+                terrainSelect
+            ];
+
+            selects.forEach(select => {
+
+                const randomIndex =
+                    Math.floor(Math.random() * select.options.length);
+
+                select.selectedIndex = randomIndex;
+            });
+
+            generateAdventure();
+        }
+
+
+        generateButton.addEventListener(
+            "click",
+            generateAdventure
+        );
+
+        surpriseButton.addEventListener(
+            "click",
+            surpriseMe
+        );
+
+    </script>
+
+</body>
+
+</html>
